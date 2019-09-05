@@ -1,2 +1,1 @@
-# portal
-BeastCorp Portal
+# BeastCorp Portal
