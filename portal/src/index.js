@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {About, AboutPage} from './about';
+import {MenuItems} from './res/menu';
 import * as serviceWorker from './serviceWorker';
 
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Layout, Menu, Breadcrumb, Icon, version } from 'antd';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -23,12 +23,19 @@ class FrenchbeastPortal extends React.Component {
         this.setState({ collapsed });
     };
 
+    onClickMenu = (item, key, keyPath, domEvent) => {
+        console.debug(item, key, keyPath, domEvent);
+    };
+
     render() {
         return (
             <Layout style={{ minHeight: '100vh' }}>
+                <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+                    BeastCorp
+                </Header>
                 <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
                     <div className="logo" />
-                    <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+                    <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={this.onClickMenu}>
                         <Menu.Item key="1">
                             <Icon type="pie-chart" />
                             <span>Option 1</span>
@@ -50,20 +57,17 @@ class FrenchbeastPortal extends React.Component {
                         </SubMenu>
                         <Menu.Item key="9">
                             <Icon type="file" />
-                            <span>File</span>
+                            <span>About</span>
                         </Menu.Item>
                     </Menu>
                 </Sider>
-                <Layout>
-                    <Header style={{ background: '#fff', padding: 0 }} />
-                    <Content style={{ margin: '0 16px' }}>
-                        <Breadcrumb style={{ margin: '16px 0' }}>
-                            {this.state.pageBreadCrumb.map(item => <Breadcrumb.Item>{item.text}</Breadcrumb.Item>)}
-                        </Breadcrumb>
-                        {this.state.pageContent}
-                    </Content>
-                    <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
-                </Layout>
+                <Content style={{ margin: '0 16px' }}>
+                    <Breadcrumb style={{ margin: '16px 0' }}>
+                        {this.state.pageBreadCrumb.map(item => <Breadcrumb.Item key={item.text}>{item.text}</Breadcrumb.Item>)}
+                    </Breadcrumb>
+                    {this.state.pageContent}
+                </Content>
+                <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED {version}</Footer>
             </Layout>
         );
     }
